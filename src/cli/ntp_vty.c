@@ -157,7 +157,7 @@ ntp_ovsrec_get_auth_key(int64_t key)
         i++;
 
         if (ntp_auth_key_row->key_id == key) {
-            VLOG_DBG("AuthKey matching %ld found at row = %d\n", key, i);
+            VLOG_DBG("AuthKey matching %"PRId64" found at row = %d\n", key, i);
             return ntp_auth_key_row;
         }
     }
@@ -304,10 +304,10 @@ vtysh_ovsdb_ntp_trusted_key_set(ntp_cli_ntp_trusted_key_params_t *pntp_trusted_k
         vty_out(vty, "This key does not exist\n");
     } else {
         if (pntp_trusted_key_params->no_form) {
-            VLOG_DBG("Unmarking key %ld as trusted\n", key);
+            VLOG_DBG("Unmarking key %"PRId64" as trusted\n", key);
             ovsrec_ntp_key_set_trust_enable(ntp_auth_key_row, NTP_FALSE);
         } else {
-            VLOG_DBG("Marking key %ld as trusted\n", key);
+            VLOG_DBG("Marking key %"PRId64" as trusted\n", key);
             ovsrec_ntp_key_set_trust_enable(ntp_auth_key_row, NTP_TRUE);
         }
     }
@@ -607,7 +607,7 @@ vtysh_ovsdb_show_ntp_associations()
         vty_out(vty, "  %3s", ((buf) ? buf : ""));
 
         if (ntp_assoc_row->key_id) {
-            vty_out(vty, "  %5ld", ((struct ovsrec_ntp_key *)ntp_assoc_row->key_id)->key_id);
+            vty_out(vty, "  %5"PRId64"", ((struct ovsrec_ntp_key *)ntp_assoc_row->key_id)->key_id);
         } else {
             vty_out(vty, "  %5s", NTP_DEFAULT_STR);
         }
@@ -764,7 +764,7 @@ vtysh_ovsdb_show_ntp_trusted_keys()
 
     OVSREC_NTP_KEY_FOR_EACH(ntp_auth_key_row, idl) {
         if ((ntp_auth_key_row) && (ntp_auth_key_row->trust_enable)) {
-            vty_out(vty, "%ld\n", ntp_auth_key_row->key_id);
+            vty_out(vty, "%"PRId64"\n", ntp_auth_key_row->key_id);
         }
     }
 
@@ -782,7 +782,7 @@ vtysh_ovsdb_show_ntp_authentication_keys()
 
     OVSREC_NTP_KEY_FOR_EACH(ntp_auth_key_row, idl) {
         if (ntp_auth_key_row) {
-            vty_out(vty, "%8ld   %16s\n", ntp_auth_key_row->key_id, ntp_auth_key_row->key_password);
+            vty_out(vty, "%8"PRId64"   %16s\n", ntp_auth_key_row->key_id, ntp_auth_key_row->key_password);
         }
     }
 

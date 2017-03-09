@@ -65,7 +65,7 @@ vtysh_config_context_ntp_clientcallback(void *p_private)
     OVSREC_NTP_ASSOCIATION_FOR_EACH(ntp_assoc_row, p_msg->idl) {
         memset(str_temp, 0, sizeof(str_temp));
         if (NULL != ntp_assoc_row->key_id) {
-            snprintf(str_temp, sizeof(str_temp), " key-id %ld", ((struct ovsrec_ntp_key *)ntp_assoc_row->key_id)->key_id);
+            snprintf(str_temp, sizeof(str_temp), " key-id %"PRId64, ((struct ovsrec_ntp_key *)ntp_assoc_row->key_id)->key_id);
         }
 
         buf = smap_get(&ntp_assoc_row->association_attributes, NTP_ASSOC_ATTRIB_VERSION);
